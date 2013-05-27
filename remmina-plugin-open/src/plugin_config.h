@@ -3,6 +3,6 @@
 
 #define PLUGIN_NAME        "OPEN"
 #define PLUGIN_DESCRIPTION "OPEN - Open a document with its application"
-#define PLUGIN_VERSION     "1.0.0.0"
+#define PLUGIN_VERSION     "1.0.0.1"
 #define PLUGIN_APPICON     "remmina-open"
 #endif
