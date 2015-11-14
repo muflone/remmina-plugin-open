@@ -37,12 +37,14 @@ static RemminaPluginService *remmina_plugin_service = NULL;
 
 static void remmina_plugin_open_init(RemminaProtocolWidget *gp)
 {
-  remmina_plugin_service->log_printf("[%s] remmina_plugin_open_init\n", PLUGIN_NAME);
+  TRACE_CALL("remmina_plugin_open_init");
+  remmina_plugin_service->log_printf("[%s] Plugin init\n", PLUGIN_NAME);
 }
 
 static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp)
 {
-  remmina_plugin_service->log_printf("[%s] remmina_plugin_open_open_connection\n", PLUGIN_NAME);
+  TRACE_CALL("remmina_plugin_open_open_connection");
+  remmina_plugin_service->log_printf("[%s] Plugin open connection\n", PLUGIN_NAME);
   #define GET_PLUGIN_STRING(value) \
     g_strdup(remmina_plugin_service->file_get_string(remminafile, value))
   #define GET_PLUGIN_BOOLEAN(value) \
@@ -81,7 +83,8 @@ static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp)
 
 static gboolean remmina_plugin_open_close_connection(RemminaProtocolWidget *gp)
 {
-  remmina_plugin_service->log_printf("[%s] remmina_plugin_open_close_connection\n", PLUGIN_NAME);
+  TRACE_CALL("remmina_plugin_open_close_connection");
+  remmina_plugin_service->log_printf("[%s] Plugin close connection\n", PLUGIN_NAME);
   remmina_plugin_service->protocol_plugin_emit_signal(gp, "disconnect");
   return FALSE;
 }
@@ -115,6 +118,7 @@ static RemminaProtocolPlugin remmina_plugin =
 
 G_MODULE_EXPORT gboolean remmina_plugin_entry(RemminaPluginService *service)
 {
+  TRACE_CALL("remmina-plugin-open::remmina_plugin_entry");
   remmina_plugin_service = service;
 
   if (!service->register_plugin((RemminaPlugin *) &remmina_plugin))
