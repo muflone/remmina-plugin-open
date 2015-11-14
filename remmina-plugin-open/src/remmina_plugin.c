@@ -51,11 +51,11 @@ static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp)
 
   RemminaFile *remminafile;
   gboolean ret;
-  GPid pid;
   GError *error = NULL;
   gchar *argv[50];
   gint argc;
   gint i;
+  GPid pid;
 
   remminafile = remmina_plugin_service->protocol_plugin_get_file(gp);
 
@@ -64,7 +64,7 @@ static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp)
   argv[argc++] = g_strdup(GET_PLUGIN_STRING("server"));
   argv[argc++] = NULL;
 
-  ret = g_spawn_async (NULL, argv, NULL, G_SPAWN_SEARCH_PATH,
+  ret = g_spawn_async(NULL, argv, NULL, G_SPAWN_SEARCH_PATH,
     NULL, NULL, &pid, &error);
 
   for (i = 0; i < argc; i++)
@@ -100,6 +100,7 @@ static const RemminaProtocolSetting remmina_plugin_open_basic_settings[] =
   { REMMINA_PROTOCOL_SETTING_TYPE_END, NULL, NULL, FALSE, NULL, NULL }
 };
 
+/* Protocol plugin definition and features */
 static RemminaProtocolPlugin remmina_plugin =
 {
   REMMINA_PLUGIN_TYPE_PROTOCOL,                 // Type
