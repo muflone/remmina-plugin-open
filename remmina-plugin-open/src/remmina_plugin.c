@@ -48,12 +48,6 @@ static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp)
   remmina_plugin_service->log_printf("[%s] Plugin open connection\n", PLUGIN_NAME);
   #define GET_PLUGIN_STRING(value) \
     g_strdup(remmina_plugin_service->file_get_string(remminafile, value))
-  #define GET_PLUGIN_BOOLEAN(value) \
-    remmina_plugin_service->file_get_int(remminafile, value, FALSE)
-  #define GET_PLUGIN_INT(value, default_value) \
-    remmina_plugin_service->file_get_int(remminafile, value, default_value)
-  #define GET_PLUGIN_PASSWORD(value) \
-    g_strdup(remmina_plugin_service->file_get_secret(remminafile, value));
 
   RemminaFile *remminafile;
   gboolean ret;
