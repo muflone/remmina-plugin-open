@@ -23,8 +23,8 @@ set(REMMINA_PLUGIN_SRCS
 )
 add_library(remmina-plugin-open ${REMMINA_PLUGIN_SRCS})
 set_target_properties(remmina-plugin-open PROPERTIES PREFIX "")
-include_directories(${GTK_INCLUDE_DIRS})
 include_directories(${CMAKE_SOURCE_DIR}/remmina-plugins)
+target_link_libraries(remmina-plugin-open ${REMMINA_COMMON_LIBRARIES})
 
 install(TARGETS remmina-plugin-open DESTINATION ${REMMINA_PLUGINDIR})
 
