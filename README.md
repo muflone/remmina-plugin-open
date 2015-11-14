@@ -26,7 +26,7 @@ Download and extract [**Remmina Plugin Builder**](https://github.com/muflone/rem
   
 Copy the plugin source files to the **remmina-plugin-to-build** directory:
 
-    cp --recursive remmina-plugin-exec CMakeLists.txt remmina-plugin-builder-1.2.0.0/remmina-plugin-to-build/
+    cp --recursive remmina-plugin-open CMakeLists.txt remmina-plugin-builder-1.2.0.0/remmina-plugin-to-build/
 
 Build the plugin using Remmina Plugin Builder:
 
