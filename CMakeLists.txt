@@ -2,7 +2,7 @@
 # Description: Remmina protocol plugin to open a document with its associated
 #              application.
 #      Author: Fabio Castelli (Muflone) <muflone@vbsimple.net>
-#   Copyright: 2011-2014 Fabio Castelli (Muflone)
+#   Copyright: 2011-2016 Fabio Castelli (Muflone)
 #     License: GPL-2+
 #
 # This program is free software; you can redistribute it and/or modify
