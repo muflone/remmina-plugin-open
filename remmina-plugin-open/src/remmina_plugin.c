@@ -26,6 +26,7 @@
   # include <gtk/gtkx.h>
 #endif
 
+// Define the launchers list
 static gpointer launchers_list[] =
 {
   "xdg-open", "Automatically detected",
@@ -89,6 +90,15 @@ static gboolean remmina_plugin_open_close_connection(RemminaProtocolWidget *gp)
   return FALSE;
 }
 
+/* Array of RemminaProtocolSetting for basic settings.
+ * Each item is composed by:
+ * a) RemminaProtocolSettingType for setting type
+ * b) Setting name
+ * c) Setting description
+ * d) Compact disposition
+ * e) Values for REMMINA_PROTOCOL_SETTING_TYPE_SELECT or REMMINA_PROTOCOL_SETTING_TYPE_COMBO
+ * f) Unused pointer
+ */
 static const RemminaProtocolSetting remmina_plugin_open_basic_settings[] =
 {
   { REMMINA_PROTOCOL_SETTING_TYPE_TEXT, "server", N_("Startup program"), FALSE, NULL, NULL },
@@ -98,22 +108,23 @@ static const RemminaProtocolSetting remmina_plugin_open_basic_settings[] =
 
 static RemminaProtocolPlugin remmina_plugin =
 {
-  REMMINA_PLUGIN_TYPE_PROTOCOL,
-  PLUGIN_NAME,
-  PLUGIN_DESCRIPTION,
-  GETTEXT_PACKAGE,
-  PLUGIN_VERSION,
-  PLUGIN_APPICON,
-  PLUGIN_APPICON,
-  remmina_plugin_open_basic_settings,
-  NULL,
-  REMMINA_PROTOCOL_SSH_SETTING_NONE,
-  NULL,
-  remmina_plugin_open_init,
-  remmina_plugin_open_open_connection,
-  remmina_plugin_open_close_connection,
-  NULL,
-  NULL
+  REMMINA_PLUGIN_TYPE_PROTOCOL,                 // Type
+  PLUGIN_NAME,                                  // Name
+  PLUGIN_DESCRIPTION,                           // Description
+  GETTEXT_PACKAGE,                              // Translation domain
+  PLUGIN_VERSION,                               // Version number
+  PLUGIN_APPICON,                               // Icon for normal connection
+  PLUGIN_APPICON,                               // Icon for SSH connection
+  remmina_plugin_open_basic_settings,           // Array for basic settings
+  NULL,                                         // Array for advanced settings
+  REMMINA_PROTOCOL_SSH_SETTING_NONE,            // SSH settings type
+  NULL,                                         // Array for available features
+  remmina_plugin_open_init,                     // Plugin initialization
+  remmina_plugin_open_open_connection,          // Plugin open connection
+  remmina_plugin_open_close_connection,         // Plugin close connection
+  NULL,                                         // Query for available features
+  NULL,                                         // Call a feature
+  NULL                                          // Send a keystroke
 };
 
 G_MODULE_EXPORT gboolean remmina_plugin_entry(RemminaPluginService *service)
