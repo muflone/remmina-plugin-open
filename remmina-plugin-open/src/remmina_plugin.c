@@ -24,8 +24,7 @@
 #include <remmina/remmina_plugin.h>
 
 // Define the launchers list
-static gpointer launchers_list[] =
-{
+static gpointer launchers_list[] = {
   "xdg-open", "Automatically detected",
   "gnome-open", "Open for GNOME",
   NULL
@@ -38,8 +37,8 @@ typedef struct {
 
 static RemminaPluginService *remmina_plugin_service = NULL;
 
-static void remmina_plugin_open_init(RemminaProtocolWidget *gp)
-{
+/* Initialize plugin */
+static void remmina_plugin_open_init(RemminaProtocolWidget *gp) {
   TRACE_CALL(__func__);
   RemminaPluginData *gpdata;
   remmina_plugin_service->log_printf("[%s] Plugin init\n", PLUGIN_NAME);
@@ -55,8 +54,8 @@ static void remmina_plugin_open_init(RemminaProtocolWidget *gp)
   g_object_set_data_full(G_OBJECT(gp), "plugin-data", gpdata, g_free);
 }
 
-static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp)
-{
+/* Open connection */
+static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp) {
   TRACE_CALL(__func__);
   RemminaFile *remminafile;
   gboolean ret;
@@ -68,16 +67,17 @@ static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp)
 
   remmina_plugin_service->log_printf("[%s] Plugin open connection\n", PLUGIN_NAME);
   remminafile = remmina_plugin_service->protocol_plugin_get_file(gp);
-
+  /* Define command line arguments */
   argc = 0;
   argv[argc++] = g_strdup(remmina_plugin_service->file_get_string(remminafile, "launcher"));
   argv[argc++] = g_strdup(remmina_plugin_service->file_get_string(remminafile, "server"));
   argv[argc++] = NULL;
-
+  /* Spawn external process */
   ret = g_spawn_async(NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, &pid, &error);
-
-  for (i = 0; i < argc; i++)
+  /* Free strings */
+  for (i = 0; i < argc; i++) {
     g_free(argv[i]);
+  }
 
   if (ret) {
     remmina_plugin_service->protocol_plugin_signal_connection_opened(gp);
@@ -87,8 +87,8 @@ static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp)
   return TRUE;
 }
 
-static gboolean remmina_plugin_open_close_connection(RemminaProtocolWidget *gp)
-{
+/* Close connection */
+static gboolean remmina_plugin_open_close_connection(RemminaProtocolWidget *gp) {
   TRACE_CALL(__func__);
   remmina_plugin_service->log_printf("[%s] Plugin close connection\n", PLUGIN_NAME);
   remmina_plugin_service->protocol_plugin_signal_connection_closed(gp);
@@ -104,16 +104,14 @@ static gboolean remmina_plugin_open_close_connection(RemminaProtocolWidget *gp)
  * e) Values for REMMINA_PROTOCOL_SETTING_TYPE_SELECT or REMMINA_PROTOCOL_SETTING_TYPE_COMBO
  * f) Setting tooltip
  */
-static const RemminaProtocolSetting remmina_plugin_open_basic_settings[] =
-{
+static const RemminaProtocolSetting remmina_plugin_open_basic_settings[] = {
   { REMMINA_PROTOCOL_SETTING_TYPE_TEXT, "server", N_("Startup program"), FALSE, NULL, NULL },
   { REMMINA_PROTOCOL_SETTING_TYPE_SELECT, "launcher", N_("Launcher"), FALSE, launchers_list, NULL },
   { REMMINA_PROTOCOL_SETTING_TYPE_END, NULL, NULL, FALSE, NULL, NULL }
 };
 
 /* Protocol plugin definition and features */
-static RemminaProtocolPlugin remmina_plugin =
-{
+static RemminaProtocolPlugin remmina_plugin = {
   REMMINA_PLUGIN_TYPE_PROTOCOL,                 // Type
   PLUGIN_NAME,                                  // Name
   PLUGIN_DESCRIPTION,                           // Description
@@ -134,13 +132,11 @@ static RemminaProtocolPlugin remmina_plugin =
   NULL                                          // Screenshot support
 };
 
-G_MODULE_EXPORT gboolean remmina_plugin_entry(RemminaPluginService *service)
-{
+G_MODULE_EXPORT gboolean remmina_plugin_entry(RemminaPluginService *service) {
   TRACE_CALL(__func__);
   remmina_plugin_service = service;
 
-  if (!service->register_plugin((RemminaPlugin *) &remmina_plugin))
-  {
+  if (!service->register_plugin((RemminaPlugin *) &remmina_plugin)) {
     return FALSE;
   }
   return TRUE;
