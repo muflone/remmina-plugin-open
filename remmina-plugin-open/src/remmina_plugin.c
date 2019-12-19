@@ -22,9 +22,6 @@
 
 #include "plugin_config.h"
 #include <remmina/remmina_plugin.h>
-#if GTK_VERSION == 3
-  # include <gtk/gtkx.h>
-#endif
 
 // Define the launchers list
 static gpointer launchers_list[] =
