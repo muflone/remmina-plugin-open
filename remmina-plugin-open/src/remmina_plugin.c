@@ -65,12 +65,15 @@ static gboolean remmina_plugin_open_open_connection(RemminaProtocolWidget *gp) {
   gint i;
   GPid pid;
 
+  #define GET_PLUGIN_STRING(value) \
+    g_strdup(remmina_plugin_service->file_get_string(remminafile, value))
+
   remmina_plugin_service->log_printf("[%s] Plugin open connection\n", PLUGIN_NAME);
   remminafile = remmina_plugin_service->protocol_plugin_get_file(gp);
   /* Define command line arguments */
   argc = 0;
-  argv[argc++] = g_strdup(remmina_plugin_service->file_get_string(remminafile, "launcher"));
-  argv[argc++] = g_strdup(remmina_plugin_service->file_get_string(remminafile, "server"));
+  argv[argc++] = GET_PLUGIN_STRING("launcher");
+  argv[argc++] = GET_PLUGIN_STRING("server");
   argv[argc++] = NULL;
   /* Spawn external process */
   ret = g_spawn_async(NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, &pid, &error);
